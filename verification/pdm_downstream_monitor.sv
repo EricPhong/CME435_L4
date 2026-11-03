@@ -92,13 +92,13 @@ class pdm_downstream_monitor extends uvm_monitor;
         end
       end
       if (waiting && !capturing && !proc_now && cycle_no-notify_cycle==5)
-        `uvm_error("NO_GRANT",$sformatf("Port %0d: grant missing after 4 cycles",cfg.port_id))
+        `uvm_error("NO_READY",$sformatf("Port %0d: ready missing after 4 cycles",cfg.port_id))
       if (proc_now && !prev_proceed) begin
         if (!waiting || capturing)
-          `uvm_error("UNEXP_GRANT",$sformatf("Port %0d unexpected PROCEED",cfg.port_id))
+          `uvm_error("UNEXP_READY",$sformatf("Port %0d unexpected PROCEED",cfg.port_id))
         else begin
           if (!(cycle_no-notify_cycle inside {[1:4]}))
-            `uvm_error("GRANT_TIME",$sformatf("Port %0d grant delay %0d",cfg.port_id,cycle_no-notify_cycle))
+            `uvm_error("READY_TIME",$sformatf("Port %0d ready delay %0d",cfg.port_id,cycle_no-notify_cycle))
           capturing=1;
           received=0;
           bytes.delete();

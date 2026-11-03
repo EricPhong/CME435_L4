@@ -45,7 +45,7 @@ class pdm_downstream_driver extends uvm_driver #(downstream_seq_item);
       if (active == null) begin
         seq_item_port.try_next_item(active);
         if (active != null) begin
-          if (active.kind != downstream_seq_item::GRANT ||
+          if (active.kind != downstream_seq_item::READY ||
               active.reset_epoch != cfg.reset_epoch) begin
             seq_item_port.item_done();
             active=null;

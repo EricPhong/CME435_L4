@@ -1,8 +1,12 @@
 /* Eric Phong, rfp479, CME435, 11344905, Lab4 */ 
  
 class downstream_seq_item extends uvm_sequence_item;
-  // REQ: notification from DUT; GRANT: driver action; RSP: completed packet.
-  typedef enum {REQ, GRANT, RSP} kind_e;
+
+  // RRequest notification from DUT; 
+  // READY: driver acknowledgement
+  //; RSP: completed packet.
+  typedef enum {REQ, READY, RSP} kind_e;
+
   kind_e kind;
   int unsigned port_id;
   int unsigned reset_epoch;

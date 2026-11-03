@@ -8,7 +8,7 @@ class pdm_downstream_reactive_seq extends uvm_sequence #(downstream_seq_item);
     super.new(name);
   endfunction
   task body();
-    downstream_seq_item notification, grant;
+    downstream_seq_item notification, ready;
     int unsigned min_d,max_d;
     if (!uvm_config_db#(pdm_downstream_agent_cfg)::get(p_sequencer,"","cfg",cfg))
       `uvm_fatal("REACFG","Reactive sequencer has no downstream config")
@@ -21,17 +21,17 @@ class pdm_downstream_reactive_seq extends uvm_sequence #(downstream_seq_item);
       if (notification.kind != downstream_seq_item::REQ ||
           notification.reset_epoch != cfg.reset_epoch ||
           cfg.vif.rst_b !== 1'b1) continue;
-      grant=downstream_seq_item::type_id::create("grant");
-      start_item(grant);
-      if (!grant.randomize() with {
+      ready=downstream_seq_item::type_id::create("ready");
+      start_item(ready);
+      if (!ready.randomize() with {
             proceed_delay >= local::min_d;
             proceed_delay <= local::max_d;
           }) `uvm_fatal("DNRAND","Cannot randomize PROCEED delay")
-      grant.kind=downstream_seq_item::GRANT;
-      grant.port_id=cfg.port_id;
-      grant.newdata_len=notification.newdata_len;
-      grant.reset_epoch=notification.reset_epoch;
-      finish_item(grant);
+      ready.kind=downstream_seq_item::READY;
+      ready.port_id=cfg.port_id;
+      ready.newdata_len=notification.newdata_len;
+      ready.reset_epoch=notification.reset_epoch;
+      finish_item(ready);
     end
   endtask
 endclass
