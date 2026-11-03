@@ -29,11 +29,11 @@ class upstream_seq_item extends uvm_sequence_item; //extend
     // Reset duration not specified by the VerDoc.
     reset_cycles inside {[2:4]};   //but I have it set to 2 to 4 clock cycles 
     if (operation == MID_TRANSFER_RESET)
-      reset_after_bytes inside {[1:data_len-1]};
-    else reset_after_bytes == 0;
+      reset_after_bytes inside {[1:data_len-1]}; // Reset only after atleast one byte has come through and its not the last one
+    else reset_after_bytes == 0; // for regular operation
   }
 
-  `uvm_object_utils_begin(upstream_seq_item)
+  `uvm_object_utils_begin(upstream_seq_item) // Factory registration and Enable all
     `uvm_field_enum(operation_e, operation, UVM_ALL_ON)
     `uvm_field_int(destination, UVM_ALL_ON)
     `uvm_field_array_int(data, UVM_ALL_ON)
@@ -42,6 +42,7 @@ class upstream_seq_item extends uvm_sequence_item; //extend
     `uvm_field_int(reset_cycles, UVM_ALL_ON)
   `uvm_object_utils_end
 
+  // Constructor
   function new(string name="upstream_seq_item");
     super.new(name);
   endfunction
