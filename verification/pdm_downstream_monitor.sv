@@ -34,7 +34,7 @@ class pdm_downstream_monitor extends uvm_monitor;
   task watch_reset();
     forever begin
       @(negedge vif.rst_b);
-      cfg.reset_epoch++;
+      cfg.reset_count++;
       clear_state();
       if (cfg.sqr_h!=null) cfg.sqr_h.mon_req_fifo.flush();
     end
@@ -65,7 +65,7 @@ class pdm_downstream_monitor extends uvm_monitor;
           item.kind=downstream_seq_item::RSP;
           item.port_id=cfg.port_id;
           item.newdata_len=expected;
-          item.reset_epoch=cfg.reset_epoch;
+          item.reset_count=cfg.reset_count;
           item.data=new[bytes.size()];
           foreach(item.data[i]) item.data[i]=bytes[i];
           downstream_txn_ap.write(item);
@@ -87,7 +87,7 @@ class pdm_downstream_monitor extends uvm_monitor;
           item.kind=downstream_seq_item::REQ;
           item.port_id=cfg.port_id;
           item.newdata_len=expected;
-          item.reset_epoch=cfg.reset_epoch;
+          item.reset_count=cfg.reset_count;
           req_ap.write(item);
         end
       end

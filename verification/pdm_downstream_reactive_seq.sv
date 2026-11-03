@@ -19,7 +19,7 @@ class pdm_downstream_reactive_seq extends uvm_sequence #(downstream_seq_item);
     forever begin
       p_sequencer.mon_req_fifo.get(notification);
       if (notification.kind != downstream_seq_item::REQ ||
-          notification.reset_epoch != cfg.reset_epoch ||
+          notification.reset_count != cfg.reset_count ||
           cfg.vif.rst_b !== 1'b1) continue;
       ready=downstream_seq_item::type_id::create("ready");
       start_item(ready);
@@ -30,7 +30,7 @@ class pdm_downstream_reactive_seq extends uvm_sequence #(downstream_seq_item);
       ready.kind=downstream_seq_item::READY;
       ready.port_id=cfg.port_id;
       ready.newdata_len=notification.newdata_len;
-      ready.reset_epoch=notification.reset_epoch;
+      ready.reset_count=notification.reset_count;
       finish_item(ready);
     end
   endtask
