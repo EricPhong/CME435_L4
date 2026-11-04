@@ -4,8 +4,8 @@ class pdm_upstream_driver extends uvm_driver #(upstream_seq_item); // extend uvm
 
   `uvm_component_utils(pdm_upstream_driver) // Factory registration
 
-  pdm_upstream_agent_cfg cfg;
-  virtual pdm_upstream_if vif;
+  pdm_upstream_agent_cfg cfg; // Agent config class
+  virtual pdm_upstream_if vif; // Virtual interface class
 
   typedef enum {IDLE, DEST, PAYLOAD, WAIT_ACK, RESET_HOLD} state_e;
   state_e state = IDLE;
@@ -21,16 +21,25 @@ class pdm_upstream_driver extends uvm_driver #(upstream_seq_item); // extend uvm
     super.new(name,parent);
   endfunction
   
-  // Builder
+/*------------------------------------------------------------------------------
+Function: build_phase
+Description: Gets agent config from config database and gets the virtual 
+interface handle
+
+Parameter: phase - Current UVM phase context
+------------------------------------------------------------------------------*/
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    if (!uvm_config_db#(pdm_upstream_agent_cfg)::get(this,"","cfg",cfg)) // Config check
+    if (!uvm_config_db#(pdm_upstream_agent_cfg)::get(this,"","cfg",cfg)) 
       `uvm_fatal("UPCFG","upstream cfg missing")
     vif = cfg.vif;
-    if (vif == null) `uvm_fatal("UPVIF","upstream virtual interface missing") // Virtual interface check
+    if (vif == null) `uvm_fatal("UPVIF","upstream virtual interface missing") 
   endfunction
 
-  // Call only if a sequence item has actually been fetched.
+/*------------------------------------------------------------------------------
+Function: finish_item
+Description: On a active item tell the sequence the driver is done with this item
+------------------------------------------------------------------------------*/
   task finish_item();
     if (active != null) begin
       seq_item_port.item_done();
@@ -39,8 +48,13 @@ class pdm_upstream_driver extends uvm_driver #(upstream_seq_item); // extend uvm
     state = IDLE;
   endtask
 
-  // Async reset
-  task watch_async_reset();
+/*------------------------------------------------------------------------------
+Function: watch_async_reset
+Description: Looks out for when a active low async reset, set output pins to 
+zero, call finish item
+
+------------------------------------------------------------------------------*/  
+task watch_async_reset();
     forever begin
       @(negedge vif.rst_b);
       // Do not abort a reset transaction intentionally initiated by this driver.
@@ -134,9 +148,10 @@ class pdm_upstream_driver extends uvm_driver #(upstream_seq_item); // extend uvm
   //   end
   // endtask
 
+  
   task drive_bus();
-    // Initial hardware reset
-    drive_reset(2);
+    
+    drive_reset(2); // assert active low reset on rst_b for 2 clcok cycles
 
     forever begin
       seq_item_port.get_next_item(active);
