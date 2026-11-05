@@ -16,6 +16,7 @@ class pdm_upstream_monitor extends uvm_monitor;
     super.new(name,parent);
     upstream_txn_ap=new("upstream_txn_ap",this);
   endfunction
+  
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     if (!uvm_config_db#(pdm_upstream_agent_cfg)::get(this,"","cfg",cfg))
