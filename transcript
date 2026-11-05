@@ -1,7 +1,7 @@
 # do /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/script/run.do
 # pdm_test_base
 # vsim -L mtiUvm work.top "+UVM_TESTNAME=pdm_test_base" "+UVM_NO_RELNOTES" 
-# Start time: 17:31:58 on Nov 05,2026
+# Start time: 17:34:21 on Nov 05,2026
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2240) Treating stand-alone use of function 'enable_dut_bugs' as an implicit VOID cast.
 # ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2240) Treating stand-alone use of function 'enable_dut_bugs' as an implicit VOID cast.
@@ -60,5 +60,5 @@
 # [TEST_DONE]     1
 # ** Note: $finish    : /CMC/tools/siemens/questasim_2022.1_2/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
 #    Time: 200 ns  Iteration: 54  Instance: /top
-# End time: 17:32:00 on Nov 05,2026, Elapsed time: 0:00:02
+# End time: 17:34:24 on Nov 05,2026, Elapsed time: 0:00:03
 # Errors: 0, Warnings: 8
