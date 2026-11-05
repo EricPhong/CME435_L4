@@ -113,7 +113,7 @@ Description: initial reset, TLM pull from squencer constantly, if we get a seque
     if (vif.rst_b !== 1'b1) // is reset done?
       `uvm_fatal("UPRESET", "Send operation started before reset release")
 
-    // Destination byte output ports (0,1,2,3)
+    // Destination byte output ports (1,2,3,4)
     vif.cb_drv.bnd_plse <= 1'b1; // signal to dut that hey I'm starting to send a packet
     vif.cb_drv.data_in  <= item.destination;
 
