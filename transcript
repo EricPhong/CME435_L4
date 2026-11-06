@@ -1,8 +1,17 @@
 # do /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/script/run.do
-# pdm_test_base
-# vsim -L mtiUvm work.top "+UVM_TESTNAME=pdm_test_base" "+UVM_NO_RELNOTES" 
-# Start time: 16:17:11 on Nov 06,2026
-# ** Note: (vsim-8009) Loading existing optimized design _opt2
+# pdm_sanity_test
+# vsim -L mtiUvm work.top "+UVM_TESTNAME=pdm_sanity_test" "+UVM_NO_RELNOTES" 
+# Start time: 17:17:12 on Nov 06,2026
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2240) Treating stand-alone use of function 'enable_dut_bugs' as an implicit VOID cast.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2240) Treating stand-alone use of function 'enable_dut_bugs' as an implicit VOID cast.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2240) Treating stand-alone use of function 'enable_dut_bugs' as an implicit VOID cast.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2240) Treating stand-alone use of function 'enable_dut_bugs' as an implicit VOID cast.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2250) Function "<protected>" has no return value assignment.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2250) Function "<protected>" has no return value assignment.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2250) Function "<protected>" has no return value assignment.
+# ** Warning: /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/dut/pdm_core.svp(5): (vopt-2250) Function "<protected>" has no return value assignment.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=8.
 # //  Questa Sim-64
 # //  Version 2022.1_2 linux_x86_64 Apr  2 2022
 # //
@@ -35,21 +44,51 @@
 # ----------------------------------------------------------------
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
-# UVM_INFO @ 0: reporter [RNTST] Running test pdm_test_base...
-# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 200000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO @ 0: reporter [RNTST] Running test pdm_sanity_test...
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_test.sv(21) @ 0: uvm_test_top [pdm_sanity_test] Waiting for reset deassertion (rst_b == 1)...
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_test.sv(28) @ 110000: uvm_test_top [pdm_sanity_test] Executing pdm_sanity_seq on upstream sequencer...
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(14) @ 110000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Starting directed sanity sequence across Ports 1 to 4
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 110000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 1 (Length: 4 bytes)
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(99) @ 190000: uvm_test_top.env.upstream_agent.monitor [BAD_DEST] Invalid destination 179
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_driver.sv(149) @ 320000: uvm_test_top.env.upstream_agent.driver [NOACK] Timed out waiting 1for upstream ACK
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 320000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 2 (Length: 8 bytes)
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(117) @ 330000: uvm_test_top.env.upstream_agent.monitor [BAD_LEN] Payload length 7 not permitted
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(99) @ 490000: uvm_test_top.env.upstream_agent.monitor [BAD_DEST] Invalid destination 199
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_driver.sv(149) @ 620000: uvm_test_top.env.upstream_agent.driver [NOACK] Timed out waiting 1for upstream ACK
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 620000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 3 (Length: 12 bytes)
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(117) @ 630000: uvm_test_top.env.upstream_agent.monitor [BAD_LEN] Payload length 7 not permitted
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(99) @ 870000: uvm_test_top.env.upstream_agent.monitor [BAD_DEST] Invalid destination 219
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_driver.sv(149) @ 1000000: uvm_test_top.env.upstream_agent.driver [NOACK] Timed out waiting 1for upstream ACK
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 1000000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 4 (Length: 16 bytes)
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(117) @ 1010000: uvm_test_top.env.upstream_agent.monitor [BAD_LEN] Payload length 7 not permitted
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(99) @ 1330000: uvm_test_top.env.upstream_agent.monitor [BAD_DEST] Invalid destination 239
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_driver.sv(149) @ 1460000: uvm_test_top.env.upstream_agent.driver [NOACK] Timed out waiting 1for upstream ACK
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(39) @ 1460000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sanity sequence completed driving all 4 packets
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_test.sv(33) @ 1460000: uvm_test_top [pdm_sanity_test] Waiting for final downstream handshakes to drain...
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(110) @ 1670000: uvm_test_top.env.upstream_agent.monitor [PACKET_LONG] No ending BND_PLSE within 16 data bytes
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(117) @ 1670000: uvm_test_top.env.upstream_agent.monitor [BAD_LEN] Payload length 17 not permitted
+# UVM_ERROR /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_upstream_monitor.sv(128) @ 1770000: uvm_test_top.env.upstream_agent.monitor [ACKTIME] No ACK within four cycles after final BND_PLSE
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 1960000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
 # 
 # --- UVM Report Summary ---
 # 
 # ** Report counts by severity
-# UVM_INFO :    4
+# UVM_INFO :   13
 # UVM_WARNING :    0
-# UVM_ERROR :    0
+# UVM_ERROR :   14
 # UVM_FATAL :    0
 # ** Report counts by id
+# [ACKTIME]     1
+# [BAD_DEST]     4
+# [BAD_LEN]     4
+# [NOACK]     4
+# [PACKET_LONG]     1
 # [Questa UVM]     2
 # [RNTST]     1
 # [TEST_DONE]     1
+# [pdm_sanity_seq]     6
+# [pdm_sanity_test]     3
 # ** Note: $finish    : /CMC/tools/siemens/questasim_2022.1_2/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-#    Time: 200 ns  Iteration: 54  Instance: /top
-# End time: 16:17:12 on Nov 06,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
+#    Time: 1960 ns  Iteration: 54  Instance: /top
+# End time: 17:17:15 on Nov 06,2026, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 8

@@ -26,4 +26,7 @@ package pdm_pkg;
     `include "pdm_upstream_reset_seq.sv"
     `include "pdm_downstream_reactive_seq.sv"
     `include "pdm_test_base.sv"
+    `include "pdm_sanity_seq.sv"
+    `include "pdm_sanity_test.sv"
+    
 endpackage
