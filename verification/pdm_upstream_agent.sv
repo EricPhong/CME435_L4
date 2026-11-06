@@ -35,9 +35,10 @@ class pdm_upstream_agent extends uvm_agent; // extend uvm agent
   // connect thigns together
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    if (cfg.is_active == UVM_ACTIVE) begin
+    if (cfg.is_active == UVM_ACTIVE) 
+    begin
       driver.seq_item_port.connect(sequencer.seq_item_export);
-      cfg.sqr_h=sequencer;
+      cfg.sqr_h=sequencer; // sequencer hand assignemnt
     end
   endfunction
 endclass
