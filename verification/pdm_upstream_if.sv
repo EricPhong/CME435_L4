@@ -17,9 +17,9 @@ interface pdm_upstream_if(input logic clk);
   endclocking
 
   // MONITOR CLOCKING BLOCK
-  clocking cb_mon @(posedge clk); 
-    default input #1step; // Preponed on posedge clk
-    input data_in, bnd_plse, ack; // This monitor is purely taking input no outs
+  clocking cb_mon @(posedge clk);
+    default input #1step output #1ns; // Crucial for avoiding monitor/driver races
+    input data_in, bnd_plse, ack;
   endclocking
 
   // Modport Defines the inputs and outputs from the perspective of the DUT
