@@ -130,11 +130,10 @@
 
 # exit $status
 # # eof
-
 #!/bin/csh -f
 
 # =========================================================
-# 1. Directory Setup (Location Independent)
+# 1. Directory Setup (Run safely from any directory)
 # =========================================================
 set SCRIPT_DIR = `dirname "$0"`
 set SCRIPT_DIR = `cd "$SCRIPT_DIR" && pwd`
@@ -146,24 +145,24 @@ set DUT_DIR = "$PROJECT_DIR/dut"
 source /CMC/scripts/siemens.questasim.2022.1_2.csh
 
 # =========================================================
-# 2. Argument Parsing
+# 2. Command Line Arguments Handling
 # =========================================================
 set TEST_NAME = "pdm_sanity_test"
-set RUN_MODE  = "batch"
+set GUI = 0
 
-while ($#argv > 0)
+while ( $#argv > 0 )
     switch ("$argv[1]")
-        # Workspace cleanup
+        # Clean temporary and build files
         case "-c":
             cd "$PROJECT_DIR"
-            echo "Cleaning temporary build and simulation files..."
+            echo "Cleaning up generated simulation files..."
             touch dummy.wlf dummy.mpf dummy.f
             rm -rf work transcript *.wlf *.vcd *.mpf modelsim.ini dummy.wlf dummy.mpf dummy.f
             echo "Clean complete."
             exit 0
             breaksw
 
-        # Zip project folder for lab submission
+        # Archive project directory for submission
         case "-z":
             cd "$PROJECT_DIR"
             set zip_name = "lab_submission.zip"
@@ -174,21 +173,23 @@ while ($#argv > 0)
             exit 0
             breaksw
 
-        # Mode selection
+        # Explicit Batch Mode flag
         case "-b":
-            set RUN_MODE = "batch"
+            set GUI = 0
             shift argv
             breaksw
 
+        # GUI Mode flag
         case "-g":
-            set RUN_MODE = "gui"
+            set GUI = 1
             shift argv
             breaksw
 
-        # Test name selection
+        # UVM Test Name flag
         case "-t":
-            if ($#argv < 2) then
+            if ( $#argv < 2 ) then
                 echo "ERROR: -t requires a test name"
+                echo "Usage: csh script/run.csh [-b | -g] [-t <test_name>] [-c] [-z]"
                 exit 1
             endif
             set TEST_NAME = "$argv[2]"
@@ -197,8 +198,8 @@ while ($#argv > 0)
             breaksw
 
         default:
-            echo "Unknown option '$argv[1]'"
-            echo "Usage: ./script/run.csh [-b | -g] [-t <test_name>] [-c] [-z]"
+            echo "ERROR: Unknown argument '$argv[1]'"
+            echo "Usage: csh script/run.csh [-b | -g] [-t <test_name>] [-c] [-z]"
             exit 1
             breaksw
     endsw
@@ -210,8 +211,11 @@ cd "$PROJECT_DIR"
 # 3. Work Library Setup
 # =========================================================
 if (! -d work) then
+    echo "Creating work library..."
     vlib work
     if ($status != 0) exit 1
+else
+    echo "Directory 'work' already exists. Skipping vlib."
 endif
 
 if (! -e "$PROJECT_DIR/modelsim.ini") then
@@ -243,24 +247,18 @@ if ($status != 0) then
 endif
 
 # =========================================================
-# 5. Simulation & Wave Dumping
+# 5. Simulation Execution
 # =========================================================
-set wlf_file = "$PROJECT_DIR/waves.wlf"
+# Export environment variables so run.do can read them
+setenv TESTNAME "$TEST_NAME"
+setenv PDM_GUI "$GUI"
 
-echo "Executing $TEST_NAME in batch mode (dumping waves to waves.wlf)..."
-vsim -c -L mtiUvm -wlf "$wlf_file" +UVM_TESTNAME=$TEST_NAME work.top -do "do $SCRIPT_DIR/run.do"
-set sim_status = $status
-
-# =========================================================
-# 6. Post-Simulation Waveform Viewer (GUI Mode)
-# =========================================================
-if ("$RUN_MODE" == "gui") then
-    if (-f "$wlf_file") then
-        echo "Launching QuestaSim GUI waveform viewer..."
-        vsim -view "$wlf_file" -do "$SCRIPT_DIR/wave.do"
-    else
-        echo "ERROR: Waveform file $wlf_file was not found."
-    endif
+if ($GUI == 1) then
+    echo "Starting Questa Simulator in GUI mode for test: $TEST_NAME..."
+    vsim -L mtiUvm -do "set TESTNAME $TEST_NAME; do $SCRIPT_DIR/run.do"
+else
+    echo "Starting Questa Simulator in BATCH mode for test: $TEST_NAME..."
+    vsim -c -L mtiUvm -do "set TESTNAME $TEST_NAME; do $SCRIPT_DIR/run.do"
 endif
 
-exit $sim_status
+exit $status
