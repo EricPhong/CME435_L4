@@ -43,26 +43,85 @@ class pdm_downstream_driver extends uvm_driver #(downstream_seq_item);//extend d
 // Parameters:
 //   phase - The standard UVM run phase handle used for phasing control
 //------------------------------------------------------------------------------
+  // task run_phase(uvm_phase phase);
+  //   // clean initial start
+  //   vif.proceed = 0;
+
+  //   forever begin
+  //     // 1. Wait for the initial reset from the DUT to be done
+  //     wait (vif.rst_b === 1'b1);
+
+  //     // 2. Concurrently execute transaction driving and reset monitoring
+  //     fork
+  //       // Thread A: line by line transaction processing
+  //       begin
+  //         forever begin
+  //           seq_item_port.get_next_item(active); // pull from sequencer I need to eat more
+
+  //           // delete old transaction items
+  //           if (active.kind != downstream_seq_item::READY ||
+  //               active.reset_count != cfg.reset_count) 
+  //               begin
+  //                  // clean finish
+  //             seq_item_port.item_done();
+  //             active = null;
+  //             continue;
+  //           end
+
+  //           // Apply proceed delay
+  //           repeat (active.proceed_delay) @(vif.cb_drv);
+
+  //           // 1cycle pROCEED pulse
+  //           vif.cb_drv.proceed <= 1'b1;
+  //           @(vif.cb_drv);
+  //           vif.cb_drv.proceed <= 1'b0;
+
+  //           // clean up
+  //           seq_item_port.item_done();
+  //           active = null;
+  //         end
+  //       end
+
+  //       // Thread B: Asynchronous reset watcher
+  //       begin
+  //         wait (vif.rst_b === 1'b0);
+  //       end
+  //     join_any
+
+  //     // 3. Reset happened kill everythign
+  //     disable fork;
+
+  //     // Asynchronous deassertion and cleanup
+  //     vif.proceed = 0;
+  //     if (active != null) begin
+  //       seq_item_port.item_done();
+  //       active = null;
+  //     end
+  //   end
+  // endtask
+
   task run_phase(uvm_phase phase);
-    // clean initial start
+    // Initial bus state
     vif.proceed = 0;
+    vif.cb_drv.proceed <= 1'b0;
 
     forever begin
-      // 1. Wait for the initial reset from the DUT to be done
+      // 1. Wait for DUT to come out of active-low reset
       wait (vif.rst_b === 1'b1);
+      vif.proceed = 0;
+      vif.cb_drv.proceed <= 1'b0;
 
       // 2. Concurrently execute transaction driving and reset monitoring
       fork
         // Thread A: line by line transaction processing
         begin
           forever begin
-            seq_item_port.get_next_item(active); // pull from sequencer I need to eat more
+            seq_item_port.get_next_item(active);
 
-            // delete old transaction items
+            // Delete old transaction items from prior reset epochs
             if (active.kind != downstream_seq_item::READY ||
                 active.reset_count != cfg.reset_count) 
-                begin
-                   // clean finish
+            begin
               seq_item_port.item_done();
               active = null;
               continue;
@@ -71,12 +130,12 @@ class pdm_downstream_driver extends uvm_driver #(downstream_seq_item);//extend d
             // Apply proceed delay
             repeat (active.proceed_delay) @(vif.cb_drv);
 
-            // 1cycle pROCEED pulse
+            // 1-cycle PROCEED pulse
             vif.cb_drv.proceed <= 1'b1;
             @(vif.cb_drv);
             vif.cb_drv.proceed <= 1'b0;
 
-            // clean up
+            // Clean up
             seq_item_port.item_done();
             active = null;
           end
@@ -88,15 +147,24 @@ class pdm_downstream_driver extends uvm_driver #(downstream_seq_item);//extend d
         end
       join_any
 
-      // 3. Reset happened kill everythign
+      // 3. Reset occurred: terminate active driving thread immediately
       disable fork;
 
-      // Asynchronous deassertion and cleanup
+      // Clear both the raw signal and the clocking block output driver
       vif.proceed = 0;
+      vif.cb_drv.proceed <= 1'b0;
+
       if (active != null) begin
         seq_item_port.item_done();
         active = null;
       end
+
+      // Flush any leftover stale transactions queued during the reset window
+      while (seq_item_port.has_do_available()) begin
+        seq_item_port.get_next_item(active);
+        seq_item_port.item_done();
+      end
+      active = null;
     end
   endtask
 endclass
