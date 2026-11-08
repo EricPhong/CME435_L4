@@ -1,11 +1,11 @@
-# set TESTNAME pdm_sanity_test
-# pdm_sanity_test
+# set TESTNAME pdm_random_test
+# pdm_random_test
 #  do /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/script/run.do
 # ==========================================================
-#   RUN.DO: Launching UVM test: pdm_sanity_test
+#   RUN.DO: Launching UVM test: pdm_random_test
 # ==========================================================
-# vsim -L mtiUvm work.top "+UVM_TESTNAME=pdm_sanity_test" "+UVM_NO_RELNOTES" 
-# Start time: 14:49:34 on Nov 08,2026
+# vsim -L mtiUvm work.top "+UVM_TESTNAME=pdm_random_test" "+UVM_NO_RELNOTES" 
+# Start time: 15:10:08 on Nov 08,2026
 # ** Note: (vsim-8009) Loading existing optimized design _opt2
 # //  Questa Sim-64
 # //  Version 2022.1_2 linux_x86_64 Apr  2 2022
@@ -39,27 +39,20 @@
 # ----------------------------------------------------------------
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
-# UVM_INFO @ 0: reporter [RNTST] Running test pdm_sanity_test...
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_test.sv(21) @ 0: uvm_test_top [pdm_sanity_test] Waiting for reset deassertion (rst_b == 1)...
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_test.sv(28) @ 110000: uvm_test_top [pdm_sanity_test] Executing pdm_sanity_seq on upstream sequencer...
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(14) @ 110000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Starting directed sanity sequence across Ports 1 to 4
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 120000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 1 (Length: 4 bytes)
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 280000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 2 (Length: 8 bytes)
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 520000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 3 (Length: 12 bytes)
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(33) @ 840000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sending sanity packet to Port 4 (Length: 16 bytes)
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_seq.sv(39) @ 1220000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_sanity_seq] Sanity sequence completed driving all 4 packets
-# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_sanity_test.sv(33) @ 1220000: uvm_test_top [pdm_sanity_test] Waiting for final downstream handshakes to drain...
-# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 1720000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO @ 0: reporter [RNTST] Running test pdm_random_test...
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_random_test.sv(31) @ 110000: uvm_test_top [pdm_random_test] --- Running full constrained-random test (30 packets) ---
+# UVM_INFO /home/.engr-ece/rfp479/Documents/02-CME-435/CME435_LAB4/02_CME435_L4/CME435_L4/verification/pdm_random_traffic_seq.sv(20) @ 110000: uvm_test_top.env.upstream_agent.sequencer@@seq [pdm_random_traffic_seq] Generating 30 constrained-random packets
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 9380000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
 # 
 # ========================================================
 #                  TEST EXECUTION SUMMARY                 
 # ========================================================
-#   TEST NAME    : pdm_sanity_test
-#   SIM TIME     : 1720000
+#   TEST NAME    : pdm_random_test
+#   SIM TIME     : 9380000
 #   FATAL COUNT  : 0
 #   ERROR COUNT  : 0
 #   WARNING COUNT: 0
-#   INFO COUNT   : 13
+#   INFO COUNT   : 6
 # --------------------------------------------------------
 #               *** UVM TEST PASSED ***                   
 # ========================================================
@@ -68,7 +61,7 @@
 # --- UVM Report Summary ---
 # 
 # ** Report counts by severity
-# UVM_INFO :   13
+# UVM_INFO :    6
 # UVM_WARNING :    0
 # UVM_ERROR :    0
 # UVM_FATAL :    0
@@ -76,9 +69,9 @@
 # [Questa UVM]     2
 # [RNTST]     1
 # [TEST_DONE]     1
-# [pdm_sanity_seq]     6
-# [pdm_sanity_test]     3
+# [pdm_random_test]     1
+# [pdm_random_traffic_seq]     1
 # ** Note: $finish    : /CMC/tools/siemens/questasim_2022.1_2/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-#    Time: 1720 ns  Iteration: 54  Instance: /top
-# End time: 14:49:36 on Nov 08,2026, Elapsed time: 0:00:02
+#    Time: 9380 ns  Iteration: 54  Instance: /top
+# End time: 15:10:10 on Nov 08,2026, Elapsed time: 0:00:02
 # Errors: 0, Warnings: 0
